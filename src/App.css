@@ -22,3 +22,15 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+p:first-letter {
+    text-transform:capitalize;
+}
+
+h1:first-letter {
+    text-transform:capitalize;
+}
+
+.btn-margin-5{
+  margin: 5px;
+}

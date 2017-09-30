@@ -6,7 +6,8 @@ class CategoryApi {
 
     static loadCategory() {
         const headers = this.requestHeaders();
-        const request = new Request(`${process.env.API_HOST}/categories`, {
+        console.log()
+        const request = new Request(`${process.env.REACT_APP_API_HOST}categories`, {
             method: 'GET',
             headers: headers
         });
@@ -22,7 +23,7 @@ class CategoryApi {
         const headers = Object.assign({
             'Content-Type': 'application/json'
         }, this.requestHeaders());
-        const request = new Request(`${process.env.API_HOST}/${category}/posts`, {
+        const request = new Request(`${process.env.REACT_APP_API_HOST}${category}/posts`, {
             method: 'GET',
             headers: headers
         });
@@ -38,7 +39,7 @@ class CategoryApi {
         const headers = Object.assign({
             'Content-Type': 'application/json'
         }, this.requestHeaders());
-        const request = new Request(`${process.env.API_HOST}/posts`, {
+        const request = new Request(`${process.env.REACT_APP_API_HOST}posts`, {
             method: 'GET',
             headers: headers
         });
@@ -50,11 +51,11 @@ class CategoryApi {
     }
 
     ////posts/${postId}
-    static fetchPostByIDAsync(PostId) {
+    static fetchPostByIDAsync(postId) {
         const headers = Object.assign({
             'Content-Type': 'application/json'
         }, this.requestHeaders());
-        const request = new Request(`${process.env.API_HOST}/posts/${postId}`, {
+        const request = new Request(`${process.env.REACT_APP_API_HOST}posts/${postId}`, {
             method: 'GET',
             headers: headers
         });
@@ -75,7 +76,7 @@ class CategoryApi {
         const headers = Object.assign({
             'Content-Type': 'application/json'
         }, this.requestHeaders());
-        const request = new Request(`${process.env.API_HOST}/posts`, {
+        const request = new Request(`${process.env.REACT_APP_API_HOST}posts`, {
             method: 'POST',
             headers: headers,
             body: JSON.stringify(postData)
@@ -91,7 +92,7 @@ class CategoryApi {
         const headers = Object.assign({
             'Content-Type': 'application/json'
         }, this.requestHeaders());
-        const request = new Request(`${process.env.API_HOST}/posts/${postId}`, {
+        const request = new Request(`${process.env.REACT_APP_API_HOST}posts/${postId}`, {
             method: 'PUT',
             headers: headers,
             body: JSON.stringify(post)
@@ -103,11 +104,11 @@ class CategoryApi {
         });
     }
 
-    static deletePostAsync({postId}) {
+    static deletePostAsync(postId) {
         const headers = Object.assign({
             'Content-Type': 'application/json'
         }, this.requestHeaders());
-        const request = new Request(`${process.env.API_HOST}/posts/${postId}`, {
+        const request = new Request(`${process.env.REACT_APP_API_HOST}posts/${postId}`, {
             method: 'DELETE',
             headers: headers
         });
@@ -122,7 +123,7 @@ class CategoryApi {
         const headers = Object.assign({
             'Content-Type': 'application/json'
         }, this.requestHeaders());
-        const request = new Request(`${process.env.API_HOST}/posts/${postId}`, {
+        const request = new Request(`${process.env.REACT_APP_API_HOST}posts/${postId}`, {
             method: 'POST',
             headers: headers,
             body: JSON.stringify({option: vote})
@@ -138,7 +139,7 @@ class CategoryApi {
         const headers = Object.assign({
             'Content-Type': 'application/json'
         }, this.requestHeaders());
-        const request = new Request(`${process.env.API_HOST}/posts/${postId}/comments`, {
+        const request = new Request(`${process.env.REACT_APP_API_HOST}posts/${postId}/comments`, {
             method: 'GET',
             headers: headers
         });
@@ -153,7 +154,7 @@ class CategoryApi {
         const headers = Object.assign({
             'Content-Type': 'application/json'
         }, this.requestHeaders());
-        const request = new Request(`${process.env.API_HOST}/comments/${commentId}`, {
+        const request = new Request(`${process.env.REACT_APP_API_HOST}comments/${commentId}`, {
             method: 'DELETE',
             headers: headers
         });
@@ -175,7 +176,7 @@ class CategoryApi {
         const headers = Object.assign({
             'Content-Type': 'application/json'
         }, this.requestHeaders());
-        const request = new Request(`${process.env.API_HOST}/comments`, {
+        const request = new Request(`${process.env.REACT_APP_API_HOST}comments`, {
             method: 'POST',
             headers: headers,
             body: JSON.stringify(postData)
@@ -191,7 +192,7 @@ class CategoryApi {
         const headers = Object.assign({
             'Content-Type': 'application/json'
         }, this.requestHeaders());
-        const request = new Request(`${process.env.API_HOST}/comments/${id}`, {
+        const request = new Request(`${process.env.REACT_APP_API_HOST}comments/${id}`, {
             method: 'PUT',
             headers: headers,
             body: JSON.stringify({'body': body, 'author': author})
@@ -207,7 +208,7 @@ class CategoryApi {
         const headers = Object.assign({
             'Content-Type': 'application/json'
         }, this.requestHeaders());
-        const request = new Request(`${process.env.API_HOST}/comments/${commentId}`, {
+        const request = new Request(`${process.env.REACT_APP_API_HOST}comments/${commentId}`, {
             method: 'POST',
             headers: headers,
             body: JSON.stringify({option: vote})

@@ -1,63 +1,71 @@
 import CategoryApi from '../api/api';
+export const FETCH_CATEGORY_POSTS = 'FETCH_CATEGORY_POSTS'
+export const FETCH_POSTS = 'FETCH_POSTS'
+export const SORT_POSTS = 'SORT_POSTS'
+export const VOTE_POSTS = 'VOTE_POSTS'
+export const DELETE_POSTS = 'DELETE_POSTS'
 
-export const FETCH_POST = 'FETCH_POST'
-export const RESET_POST = 'RESET_POST'
-export const CREATE_POST = 'CREATE_POST'
-export const EDIT_POST = 'EDIT_POST'
-export const DELETE_POST = 'DELETE_POST'
-export const VOTE_POST = 'VOTE_POST'
-
-export function fetchPost(data) {
-    return {type: FETCH_POST, data}
+export function fetchPosts(data) {
+    return {type: FETCH_POSTS, data}
 }
 
-export function createPost(data) {
-    return {type: CREATE_POST, data}
+export function sortPosts(sortProperty,orderBy) {
+    return {type: SORT_POSTS, sortProperty,orderBy}
 }
 
-export function editPost(data) {
-    return {type: EDIT_POST, data}
+export function fetchCategoryPosts(data) {
+    return {type: FETCH_CATEGORY_POSTS, data}
 }
 
-export function deletePost(data) {
-    return {type: DELETE_POST, data}
+export function votePosts(data) {
+    return {type: VOTE_POSTS, data}
 }
 
-export function votePost(data) {
-    return {type: VOTE_POST, data}
+export function deletePosts(data) {
+    return {type: DELETE_POSTS, data}
 }
 
-export function fetchPostAsync(postId) {
+export function fetchCategoryPostsAsync(category) {
+    return function (dispatch) {
+        return CategoryApi
+            .fetchCategoryPostsAsync(category)
+            .then(data => {
+                dispatch(fetchCategoryPosts(data));
+            })
+            .catch(error => {
+                throw(error);
+            });
+    };
+}
+
+export function fetchPostsAsync() {
+    return function (dispatch) {
+        return CategoryApi
+            .fetchPostAsync()
+            .then(data => {
+                dispatch(fetchPosts(data));
+            })
+            .catch(error => {
+                throw(error);
+            });
+    };
+}
+
+
+export function votePostsAsync({postId, vote}) {
     return dispatch => CategoryApi
-        .fetchPostByIDAsync(postId)
-        .then(data => dispatch(fetchPost(data)))
+        .votePostAsync({postId,vote})
+        .then(data => dispatch(votePosts(data)))
         .catch(error => {
             throw(error);
         });
+
 }
 
-export function createPostAsync({post}) {
+export function deletePostsAsync(postId) {
     return dispatch => CategoryApi
-        .createPostAsync({post})
-        .then(data => dispatch(createPost(data)))
-        .catch(error => {
-            throw(error);
-        });
-}
-
-export function editPostAsync ({postId, post}) {
-        return dispatch => CategoryApi
-        .editPostAsync({postId, post})
-        .then(data => dispatch(editPost(data)))
-        .catch(error => {
-            throw(error);
-        });
-}
-
-export function deletePostAsync({postId}) {
-    return dispatch => CategoryApi
-        .deletePostAsync({postId})
-        .then(data => dispatch(deletePost(data)))
+        .deletePostAsync(postId)
+        .then(data => dispatch(deletePosts(data)))
         .catch(error => {
             throw(error);
         });

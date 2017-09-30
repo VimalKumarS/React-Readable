@@ -4,10 +4,10 @@ import reducer from '../reducers/index'
 
 const logger = store => next => action => {
   console.group(action.type)
-  console.info('dispatching', action)
+  //console.info('dispatching', action)
   let result = next(action)
   console.log('next state', store.getState())
-  console.groupEnd(action.type)
+  //console.groupEnd(action.type)
   return result
 }
 

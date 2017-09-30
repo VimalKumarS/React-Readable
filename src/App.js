@@ -1,17 +1,16 @@
 import React from 'react'
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {BrowserRouter} from 'react-router-dom'
 import {Provider} from 'react-redux'
 import store from './stores/configureStore'
-import 
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
+import AppRender from './components/App'
 
 function App () {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <Switch>
-          <Route exact path='/' component={Homepage} />
-          <Route exact path='/:category' component={Homepage} />
-        </Switch>
+       <AppRender />
       </BrowserRouter>
     </Provider>
   )
