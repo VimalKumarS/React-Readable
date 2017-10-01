@@ -22,29 +22,30 @@ export function deletePostComment(data) {
     return {type: DELETE_POST_COMMENT, data}
 }
 
-export function votePostComment(data) {
-    return {type: VOTE_POST_COMMENT, data}
+export function votePostComment(data,sortProperty,sortBy) {
+    return {type: VOTE_POST_COMMENT, data,sortProperty,sortBy}
 }
 
 export function fetchPostCommentsAsync(postId) {
     return dispatch => CategoryApi
         .fetchPostCommentsAsync(postId)
-        .then(data => dispatch(fetchPostComments(data)))
+        .then(data => 
+            dispatch(fetchPostComments(data)))
         .catch(error => {
             throw(error);
         });
 }
 
-export function deletePostCommentAsync({commentId}) {
+export function deletePostCommentAsync(commentId) {
     return dispatch => CategoryApi
-        .deletePostCommentAsync({commentId})
+        .deletePostCommentAsync(commentId)
         .then(data => dispatch(deletePostComment(data)))
         .catch(error => {
             throw(error);
         });
 }
 
-function createPostCommentAsync({body, author, parentId}) {
+export function createPostCommentAsync({body, author, parentId}) {
     return dispatch => CategoryApi
         .createPostCommentAsync({body, author, parentId})
         .then(data => dispatch(createPostComment(data)))
@@ -53,7 +54,7 @@ function createPostCommentAsync({body, author, parentId}) {
         });
 }
 
-function editPostCommentAsync({id, body, author}) {
+export function editPostCommentAsync({id, body, author}) {
     return dispatch => CategoryApi
         .editPostCommentAsync({id, body, author})
         .then(data => dispatch(editPostComment(data)))
@@ -62,10 +63,11 @@ function editPostCommentAsync({id, body, author}) {
         });
 }
 
-function votePostCommentAsync({commentId, vote}) {
+export function votePostCommentAsync({commentId, vote},sortProperty,sortBy) {
     return dispatch => CategoryApi
         .votePostCommentAsync({commentId, vote})
-        .then(data => dispatch(votePostComment(data)))
+        .then(data =>
+             dispatch(votePostComment(data,sortProperty,sortBy)))
         .catch(error => {
             throw(error);
         });

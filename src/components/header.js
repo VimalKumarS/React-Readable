@@ -26,7 +26,7 @@ class Header extends React.Component {
                                 {categories.length > 0 ?  categories.map((item) => (
                                     
                                     <li key={item.path}>
-                                        <Link to={item.path}>{item.name}</Link>
+                                        <Link to={'/categrory/'+item.path}>{item.name}</Link>
                                     </li>
                                 )): 'None'}
                             </ul>

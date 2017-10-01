@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom'
 import {fetchCategoryPostsAsync, fetchPostsAsync, votePostsAsync, deletePostsAsync} from '../actions/posts';
 import AddSort from "./AddSort"
 
@@ -58,6 +59,14 @@ class Home extends React.Component {
                   <div className="row">
                     <div className="span8">
                       <h4>
+                        <Link to={"/post/"+item.id}>
+                        <button
+                          type="button"
+                          className="btn btn-default btn-sm float-right"
+                         >                          
+                          Edit
+                        </button>
+                        </Link>
                         <button
                           type="button"
                           className="btn btn-default btn-sm"
@@ -68,9 +77,10 @@ class Home extends React.Component {
                           Remove
                         </button>
                         <strong>
-                          <a href="">{item.title}</a>
+                          <Link to={"categrory/"+item.category+"/"+item.id}>{item.title}</Link>                          
                         </strong>
                       </h4>
+                      
                     </div>
                   </div>
                   <div className="row">

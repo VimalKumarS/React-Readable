@@ -45,9 +45,9 @@ export function createPostAsync(post) {
         });
 }
 
-export function editPostAsync({postId, post}) {
+export function editPostAsync(postId, post) {
     return dispatch => CategoryApi
-        .editPostAsync({postId, post})
+        .editPostAsync(postId, post)
         .then(data => dispatch(editPost(data)))
         .catch(error => {
             throw(error);

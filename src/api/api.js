@@ -88,7 +88,7 @@ class CategoryApi {
         });
     }
 
-    static editPostAsync({postId, post}) {
+    static editPostAsync(postId, post) {
         const headers = Object.assign({
             'Content-Type': 'application/json'
         }, this.requestHeaders());
@@ -150,7 +150,7 @@ class CategoryApi {
         });
     }
 
-    static deletePostCommentAsync({commentId}) {
+    static deletePostCommentAsync(commentId) {
         const headers = Object.assign({
             'Content-Type': 'application/json'
         }, this.requestHeaders());

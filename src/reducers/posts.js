@@ -9,16 +9,15 @@ function posts(state = [], action) {
         case SORT_POSTS:
             return _.orderBy([...state], [action.sortProperty], [action.orderBy])
         case VOTE_POSTS:
-            let id = action.data.id;
-           state.map((item) => {
+            let id = action.data.id;           
+            return [...state.filter((item) => {
                 if(item.id === id){
-                    item.voteScore = action.data.voteScore
-                    
+                    item.voteScore = action.data.voteScore                   
                 }
-            })
-            return [...state];
+                return item
+            })];
         case DELETE_POSTS:
-            return [...state.filter(x=> x.id != action.data.id )];
+            return [...state.filter(x=> x.id !== action.data.id )];
         default:
             return state
     }
