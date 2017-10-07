@@ -10,9 +10,10 @@ const Main = () => (
         <Switch>
             <Route exact path='/' component={Home}/>
             <Route exact path='/newpost' component={NewPost}/>
-            <Route exact path='/categrory/:category' component={Home}/>
-            <Route exact path='/categrory/:category/:postId' component={PostDetail} />
             <Route exact path='/post/:postId' component={EditPost} />
+            <Route exact path='/:category' component={Home}/>
+            <Route exact path='/:category/:postId' component={PostDetail} />
+            
         </Switch>
     </main>
 )

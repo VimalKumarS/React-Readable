@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {fetchPostAsync, votePostAsync, deletePostAsync} from '../actions/post';
-import {fetchPostCommentsAsync, votePostCommentAsync,
-     deletePostCommentAsync, editPostCommentAsync, createPostCommentAsync} from '../actions/comments'
+import {fetchPostCommentsAsync, votePostCommentAsync, deletePostCommentAsync, editPostCommentAsync, createPostCommentAsync} from '../actions/comments'
 
 class PostDetail extends React.Component {
 
@@ -21,6 +21,14 @@ class PostDetail extends React.Component {
         this
             .props
             .deletePostAsync(postid);
+        this
+            .props
+            .comments
+            .foreach(comment => {
+                this
+                    .props
+                    .deletePostCommentAsync(comment.id)
+            })
         this
             .props
             .history
@@ -61,7 +69,9 @@ class PostDetail extends React.Component {
         const author = e.target.author.value
         const parentid = this.props.post.id
         if (this.commentId.value !== undefined && this.commentId.value !== '') {
-            this.props.editPostCommentAsync({id:this.commentId.value,body:commentBody,author:author})
+            this
+                .props
+                .editPostCommentAsync({id: this.commentId.value, body: commentBody, author: author})
         } else {
             this
                 .props
@@ -79,103 +89,118 @@ class PostDetail extends React.Component {
         const {post, comments} = this.props
         return (
             <div>
+                {post.id !== undefined
+                    ? ((
+                        <div className="row" key={post.id}>
+                            <div className="span12">
+                                <div className="row">
+                                    <div className="span8">
+                                        <h4>
+                                            <Link to={"/post/" + post.id}>
+                                                <button type="button" className="btn btn-default btn-sm float-right">
+                                                    Edit
+                                                </button>
+                                            </Link>
+                                            <button
+                                                type="button"
+                                                className="btn btn-default btn-sm"
+                                                onClick={this
+                                                .deletePostAsync
+                                                .bind(this, post.id)}>
+                                                <span className="glyphicon glyphicon-remove"></span>
+                                                Remove
+                                            </button>
+                                            <strong>
+                                                <a href="">{post.title}</a>
+                                            </strong>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div className="row">
 
-                {post && (
-                    <div className="row" key={post.id}>
-                        <div className="span12">
-                            <div className="row">
-                                <div className="span8">
-                                    <h4>
-                                        <button
-                                            type="button"
-                                            className="btn btn-default btn-sm"
-                                            onClick={this
-                                            .deletePostAsync
-                                            .bind(this, post.id)}>
-                                            <span className="glyphicon glyphicon-remove"></span>
-                                            Remove
-                                        </button>
-                                        <strong>
-                                            <a href="">{post.title}</a>
-                                        </strong>
-                                    </h4>
+                                    <div className="span10">
+                                        <p>
+                                            {post.body}
+                                        </p>
+
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="span8">
+                                        <p></p>
+                                        <p>
+                                            <i className="icon-user"></i>
+                                            by
+                                            <a href="">
+                                                {post.author}
+                                            </a>
+                                            | created on : {(new Date(post.timestamp)).toDateString()}
+                                            | Category : {post.category}
+                                            |
+                                            <button
+                                                type="button"
+                                                className="btn btn-default btn-sm btn-margin-5"
+                                                onClick={this
+                                                .postVote
+                                                .bind(this, post.id, 'upVote')}>
+                                                <span className="glyphicon glyphicon-thumbs-up"></span>
+                                                Up Vote
+                                            </button>
+                                            Score : {post.voteScore}
+                                            <button
+                                                type="button"
+                                                className="btn btn-default btn-sm btn-margin-5"
+                                                onClick={this
+                                                .postVote
+                                                .bind(this, post.id, 'downVote')}>
+                                                <span className="glyphicon glyphicon-thumbs-down"></span>
+                                                Down Vote
+                                            </button>
+
+                                        </p>
+                                        <p>{comments && comments ? comments.length : 0} comments</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="row">
-
-                                <div className="span10">
-                                    <p>
-                                        {post.body}
-                                    </p>
-
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="span8">
-                                    <p></p>
-                                    <p>
-                                        <i className="icon-user"></i>
-                                        by
-                                        <a href="">
-                                            {post.author}
-                                        </a>
-                                        | created on : {(new Date(post.timestamp)).toDateString()}
-                                        | Category : {post.category}
-                                        |
-                                        <button
-                                            type="button"
-                                            className="btn btn-default btn-sm btn-margin-5"
-                                            onClick={this
-                                            .postVote
-                                            .bind(this, post.id, 'upVote')}>
-                                            <span className="glyphicon glyphicon-thumbs-up"></span>
-                                            Up Vote
-                                        </button>
-                                        Score : {post.voteScore}
-                                        <button
-                                            type="button"
-                                            className="btn btn-default btn-sm btn-margin-5"
-                                            onClick={this
-                                            .postVote
-                                            .bind(this, post.id, 'downVote')}>
-                                            <span className="glyphicon glyphicon-thumbs-down"></span>
-                                            Down Vote
-                                        </button>
-
-                                    </p>
-                                </div>
-                            </div>
+                            <hr/>
                         </div>
-                        <hr/>
-                    </div>
-                )}
+                    ))
+                    : (
+                        <div>
+                            No record found</div>
+                    )}
+                {post.id !== undefined
+                    ? (
+                        <form onSubmit={this.handleSubmit}>
+                            <div className="form-group">
+                                <label>Name
+                                    <span className="required">*</span>
+                                </label>
+                                <input type="hidden" ref={input => this.commentId = input}/>
+                                <input
+                                    type="text"
+                                    ref={input => this.author = input}
+                                    name="author"
+                                    className="form-control field-long"/>
+                            </div>
+                            <div className="form-group">
+                                <label>Comment
+                                    <span className="required">*</span>
+                                </label>
+                                <textarea
+                                    ref={input => this.comment = input}
+                                    name="body"
+                                    id="field5"
+                                    className="form-control field-long field-textarea"></textarea>
+                            </div>
+                            <button className="pull-right">Submit</button>
 
-                <form onSubmit={this.handleSubmit}>
-                    <div className="form-group">
-                        <label>Name
-                            <span className="required">*</span>
-                        </label>
-                        <input type="hidden" ref={input => this.commentId = input}/>
-                        <input
-                            type="text"
-                            ref={input => this.author = input}
-                            name="author"
-                            className="form-control field-long"/>
-                    </div>
-                    <div className="form-group">
-                        <label>Comment
-                            <span className="required">*</span>
-                        </label>
-                        <textarea
-                            ref={input => this.comment = input}
-                            name="body"
-                            id="field5"
-                            className="form-control field-long field-textarea"></textarea>
-                    </div>
-                    <button className="pull-right">Submit</button>
-
-                </form>
-
+                        </form>
+                    )
+                    : (
+                        <div>
+                            </div>
+                    )}
                 {comments && comments.map((item) => (
                     <div className="row" key={item.id}>
                         <div className="col-sm-5">
@@ -254,6 +279,7 @@ function mapDispatchToProps(dispatch) {
         deletePostCommentAsync: (data) => dispatch(deletePostCommentAsync(data)),
         createPostCommentAsync: (data) => dispatch(createPostCommentAsync(data)),
         editPostCommentAsync: (data) => dispatch(editPostCommentAsync(data))
+        
     }
 }
 
