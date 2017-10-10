@@ -2,13 +2,13 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom'
 import {votePostsAsync, deletePostsAsync, fetchPostsAsync} from '../actions/posts';
+import {fetchPostCommentsAsync} from '../actions/comments'
 
-import CommentCount from "./commentcount"
 
 class SinglePost extends React.Component {
 
     componentDidMount() {
-        //this.fetchData();
+        this.fetchData();
        
     }
 
@@ -110,11 +110,11 @@ class SinglePost extends React.Component {
                                             </button>
 
                                         </p>
-                                        <CommentCount postid={post.id}/>
+                                        
                                     </div>
                                 </div>
                             </div>
-                            <hr/>
+                            
                         </div>
                     )
 }
@@ -127,7 +127,8 @@ class SinglePost extends React.Component {
 function mapStateToProps(state, {post}) {
     
     return {
-       post:post
+       post:post,
+  
     }
 }
 
@@ -135,8 +136,8 @@ function mapDispatchToProps(dispatch) {
     return {
         fetchPostsAsync: () => dispatch(fetchPostsAsync()),
         votePostsAsync: (data) => dispatch(votePostsAsync(data)),
-        deletePostsAsync: (data) => dispatch(deletePostsAsync(data))       
-        
+        deletePostsAsync: (data) => dispatch(deletePostsAsync(data)),       
+        fetchPostCommentsAsync: (data) => dispatch(fetchPostCommentsAsync(data))
     }
 }
 

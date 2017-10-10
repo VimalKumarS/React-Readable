@@ -1,3 +1,4 @@
+import uuidv4 from 'uuid/v4'
 class CategoryApi {
 
     static requestHeaders() {
@@ -70,7 +71,7 @@ class CategoryApi {
     static createPostAsync(post) {
         const postData = {
             ...post,
-            id: new Date().valueOf(),
+            id: uuidv4(),
             timestamp: Date.now()
         }
         const headers = Object.assign({
@@ -167,11 +168,11 @@ class CategoryApi {
 
     static createPostCommentAsync({body, author, parentId}) {
         const postData = {
-            body: body,
-            author: author,
-            parentId: parentId,
-            id: new Date().valueOf(),
-            timestamp: Date.now()
+            'id': uuidv4(),
+            'timestamp': Date.now(),
+            'body': body,
+            'author': author,
+            'parentId': parentId
         }
         const headers = Object.assign({
             'Content-Type': 'application/json'

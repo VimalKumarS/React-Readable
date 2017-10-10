@@ -12,11 +12,11 @@ class CommentCount extends React.Component {
             .fetchPostCommentsAsync(this.props.postid)
     }
 
-    shouldComponentUpdate(nextProps) {
+    //shouldComponentUpdate(nextProps) {
         //const differentTitle = this.props.title !== nextProps.title;
         //const differentDone = this.props.done !== nextProps.done
-        return this.props.comments !== nextProps.comments;
-    }
+       // return this.props.comments !== nextProps.comments;
+    //}
 
     render() {
 
@@ -35,11 +35,9 @@ class CommentCount extends React.Component {
     }
 }
 
-function mapStateToProps({
-    comments
-}, {postid}) {
+function mapStateToProps(state, {postid}) {
 
-    return {comments: comments.filter(x=> x.parentId === postid)}
+    return {comments:state.comments.filter(x=> x.parentId===postid)}
 }
 
 function mapDispatchToProps(dispatch) {
